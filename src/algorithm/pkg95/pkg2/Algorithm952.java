@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author ali
+ * 
  */
 public class Algorithm952 {
 
