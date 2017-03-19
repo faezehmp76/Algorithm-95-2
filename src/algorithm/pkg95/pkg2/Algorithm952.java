@@ -33,7 +33,7 @@ public class Algorithm952 {
         Scanner input = new Scanner(System.in);
         // **********************************
         System.out.println("************      Menu      ************** \n Plz Enter One of the Menu Numbers");
-        System.out.println("1. Exit \n2. Generate File\n3. etc");
+        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. etc");
         while(true)
         {
             int n = input.nextInt();
@@ -46,8 +46,11 @@ public class Algorithm952 {
                     System.out.println("Generating random integers and writing to File.txt ...");
                     generateFile();
                     break;
-
-
+                case 3:
+                    System.out.println("Using Merge Sort Method For Sorting.");
+                    //voroodi mikhad!! az generateFile bayad estefade konam??
+                    //mergeSort();
+                    break;
             }
         }
         
@@ -105,4 +108,80 @@ public class Algorithm952 {
             ex.printStackTrace();
         }
     }
+    
+    public static int[] mergeSort(int a[])
+    {
+        /*  Iman Shirali - 9450016
+            Mohammad Hassan Helali Jula- 
+            Amirhossein Salahmanesh- 9450035
+            Run time for this function:-------
+        */
+	if(a.length<=1){
+            return a;
+	}
+
+	int b[];
+	int c[];
+	int x=a.length;
+        
+	if(x%2==0){
+            b=new int[(a.length/2)];
+            c=new int[(a.length/2)];
+
+	}
+        else{
+            b=new int[(a.length/2)];
+            c=new int[(a.length/2)+1];
+	}
+		
+	for(int i=0 ;i<b.length ;i++){
+            b[i]=a[i];
+	}
+		
+	for(int i=b.length;i<a.length ;i++){
+            c[i-b.length]=a[i];
+	}
+			
+	b=mergeSort(b);
+	c=mergeSort(c);
+	return merge(b,c);
+        
+    }
+	
+    public static int[] merge(int b[],int c[])
+    {
+	/*  Iman Shirali - 9450016
+            Mohammad Hassan Helali- 
+            Amirhossein Salahmanesh- 9450035
+        */	
+	int res[]=new int[b.length+c.length];
+	int i=0,j=0,k=0;
+	while(i<b.length && j<c.length){
+            if(b[i]>c[j]){
+		res[k]=c[j];
+		j++;
+            }
+            else{
+		res[k]=b[i];
+		i++;
+            }
+            k++;
+            }
+            if(i==b.length){
+		while(j<c.length){
+		res[k]=c[j];
+		j++;
+		k++;
+                }
+            }
+            else if(j==c.length){
+                while(i<b.length){
+                    res[k]=b[i];
+                    i++;
+                    k++;
+		}
+            }
+	return res;
+    }
+    
 }
