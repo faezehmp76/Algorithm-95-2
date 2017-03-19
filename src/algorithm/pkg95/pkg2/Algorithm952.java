@@ -14,8 +14,17 @@
  */
 package algorithm.pkg95.pkg2;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -54,6 +63,48 @@ public class Algorithm952 {
             }
         }
         
+    }
+    
+    public static int[] getArray()
+    {
+        // Ali Salehi - 9250025
+        // it returns an array read from a file
+        int []array;
+        try
+        {
+            InputStream fis = new FileInputStream("File.txt");
+            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+            BufferedReader br = new BufferedReader(isr);
+            List<Integer> arr = new ArrayList<Integer>();
+            String line;
+            // read from file and split by ',' then store the integer in an array List
+            while(( line = br.readLine()) != null)
+            {
+                String []ss = line.split(",");
+                for(int i=0;i<ss.length;i++)
+                {
+                    arr.add(Integer.parseInt(ss[i]));
+                }
+            }
+            // call the Convert Integer method. it converts a list to an array
+            array  = convertIntegers(arr);
+            //System.out.println("array.length >    " + array.length);
+            return array;
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception :   " +ex);
+        }
+        array = new int[0];
+        return array;
+    }
+    public static int[] convertIntegers(List<Integer> integer)
+    {
+        // this Method Convert an Integer ArrayList to integer array :)
+        int []result = new int[integer.size()];
+        for(int i=0;i< result.length;i++)
+            result[i] = integer.get(i).intValue();
+        return result;
     }
     public static void Exit()
     {
