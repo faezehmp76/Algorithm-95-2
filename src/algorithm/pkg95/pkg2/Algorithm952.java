@@ -1,3 +1,12 @@
+// added this comment just for test
+
+//New comment 
+//Newer comment as guest
+//Next comment 
+//added this comment for another test!
+
+//my new comment with MyNewBranch
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,6 +14,9 @@
  */
 package algorithm.pkg95.pkg2;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -21,7 +33,7 @@ public class Algorithm952 {
         Scanner input = new Scanner(System.in);
         // **********************************
         System.out.println("************      Menu      ************** \n Plz Enter One of the Menu Numbers");
-        System.out.println("1. Exit \n2. Example 1\n3. etc");
+        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. etc");
         while(true)
         {
             int n = input.nextInt();
@@ -31,10 +43,14 @@ public class Algorithm952 {
                     Exit(); // don't forget to use comment in your code.
                     break;
                 case 2:
-                    System.out.println("some function");
+                    System.out.println("Generating random integers and writing to File.txt ...");
+                    generateFile();
                     break;
-
-
+                case 3:
+                    System.out.println("Using Merge Sort Method For Sorting.");
+                    //voroodi mikhad!! az generateFile bayad estefade konam??
+                    //mergeSort();
+                    break;
             }
         }
         
@@ -59,6 +75,113 @@ public class Algorithm952 {
                     >>etc
             }
         */
+    }
+    
+    
+    public static void generateFile()
+    {
+        /*  Mohammad Amin Meshk - 9450025
+            Mansour Ahmadzadeh - 9450001
+            Run time for this function: < 1 second
+        */
+        try
+        {
+            long FirstTime = System.currentTimeMillis();
+            Random rand = new Random();
+            File file = new File("File.txt");
+            FileWriter wr = new FileWriter(file);
+            wr.append(1 + ",");
+            int count = 6580000;
+            for (int i = 0; i < count; i++)
+            {
+                wr.append(rand.nextInt(998) + 1 + ",");
+            }
+            wr.append(999 + "");
+            wr.flush();
+            wr.close();
+            long FinalTime = System.currentTimeMillis();
+            System.out.println("The File.txt has been successfully generated with the size of " + file.length() / 1000 +
+                    " KB and " + count + " integer numbers and took " + (FinalTime - FirstTime) + " miliseconds.");
+
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static int[] mergeSort(int a[])
+    {
+        /*  Iman Shirali - 9450016
+            Mohammad Hassan Helali Jula- 
+            Amirhossein Salahmanesh- 9450035
+            Run time for this function:-------
+        */
+	if(a.length<=1){
+            return a;
+	}
+
+	int b[];
+	int c[];
+	int x=a.length;
+        
+	if(x%2==0){
+            b=new int[(a.length/2)];
+            c=new int[(a.length/2)];
+
+	}
+        else{
+            b=new int[(a.length/2)];
+            c=new int[(a.length/2)+1];
+	}
+		
+	for(int i=0 ;i<b.length ;i++){
+            b[i]=a[i];
+	}
+		
+	for(int i=b.length;i<a.length ;i++){
+            c[i-b.length]=a[i];
+	}
+			
+	b=mergeSort(b);
+	c=mergeSort(c);
+	return merge(b,c);
+        
+    }
+	
+    public static int[] merge(int b[],int c[])
+    {
+	/*  Iman Shirali - 9450016
+            Mohammad Hassan Helali- 
+            Amirhossein Salahmanesh- 9450035
+        */	
+	int res[]=new int[b.length+c.length];
+	int i=0,j=0,k=0;
+	while(i<b.length && j<c.length){
+            if(b[i]>c[j]){
+		res[k]=c[j];
+		j++;
+            }
+            else{
+		res[k]=b[i];
+		i++;
+            }
+            k++;
+            }
+            if(i==b.length){
+		while(j<c.length){
+		res[k]=c[j];
+		j++;
+		k++;
+                }
+            }
+            else if(j==c.length){
+                while(i<b.length){
+                    res[k]=b[i];
+                    i++;
+                    k++;
+		}
+            }
+	return res;
     }
     
 }
