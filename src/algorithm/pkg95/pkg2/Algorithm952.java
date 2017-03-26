@@ -1,8 +1,8 @@
 // added this comment just for test
 
-//New comment 
+//New comment
 //Newer comment as guest
-//Next comment 
+//Next comment
 //added this comment for another test!
 
 //my new comment with MyNewBranch
@@ -24,13 +24,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 /**
  *
- * 
+ *
  */
 public class Algorithm952 {
 
@@ -42,7 +43,7 @@ public class Algorithm952 {
         Scanner input = new Scanner(System.in);
         // **********************************
         System.out.println("************      Menu      ************** \n Plz Enter One of the Menu Numbers");
-        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. etc");
+        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. Triple Merge Sort \n5. etc");
         while(true)
         {
             int n = input.nextInt();
@@ -60,11 +61,18 @@ public class Algorithm952 {
                     //voroodi mikhad!! az generateFile bayad estefade konam??
                     //mergeSort();
                     break;
+                case 4:
+                    System.out.println("Using TripleMergeSort for sorting.");
+                    int[] array = getArray();
+                    TripleMergeSort(array);
+                    arrayToFile(array);
+                    System.out.println("Sorting done and the sorted file is \"TripleMergeSort.txt\" in the project directory!");
+                    break;
             }
         }
-        
+
     }
-    
+
     public static int[] getArray()
     {
         // Ali Salehi - 9250025
@@ -115,7 +123,7 @@ public class Algorithm952 {
         */
         System.out.println("Exit called");
         System.exit(0);
-        
+
         /*
             at this place other student check the function and write down their result. for example:
             Ali Salehi - 9250025{
@@ -127,8 +135,8 @@ public class Algorithm952 {
             }
         */
     }
-    
-    
+
+
     public static void generateFile()
     {
         /*  Mohammad Amin Meshk - 9450025
@@ -159,11 +167,11 @@ public class Algorithm952 {
             ex.printStackTrace();
         }
     }
-    
+
     public static int[] mergeSort(int a[])
     {
         /*  Iman Shirali - 9450016
-            Mohammad Hassan Helali Jula- 
+            Mohammad Hassan Helali Jula-
             Amirhossein Salahmanesh- 9450035
             Run time for this function:-------
         */
@@ -174,7 +182,7 @@ public class Algorithm952 {
 	int b[];
 	int c[];
 	int x=a.length;
-        
+
 	if(x%2==0){
             b=new int[(a.length/2)];
             c=new int[(a.length/2)];
@@ -184,27 +192,27 @@ public class Algorithm952 {
             b=new int[(a.length/2)];
             c=new int[(a.length/2)+1];
 	}
-		
+
 	for(int i=0 ;i<b.length ;i++){
             b[i]=a[i];
 	}
-		
+
 	for(int i=b.length;i<a.length ;i++){
             c[i-b.length]=a[i];
 	}
-			
+
 	b=mergeSort(b);
 	c=mergeSort(c);
 	return merge(b,c);
-        
+
     }
-	
+
     public static int[] merge(int b[],int c[])
     {
 	/*  Iman Shirali - 9450016
-            Mohammad Hassan Helali- 
+            Mohammad Hassan Helali-
             Amirhossein Salahmanesh- 9450035
-        */	
+        */
 	int res[]=new int[b.length+c.length];
 	int i=0,j=0,k=0;
 	while(i<b.length && j<c.length){
@@ -234,5 +242,115 @@ public class Algorithm952 {
             }
 	return res;
     }
-    
+
+    public static void TripleMergeSort(int[] array){
+        /*
+            AmirMohammad Karamzadeh - 9450021
+            Dariush Makvandi - 9450028
+            Running time : 4 seconds
+        */
+        int temp;
+
+        if(array.length>=3){
+            int fmid =(int) ((array.length)/3);
+            int smid = (int) (2*(array.length))/3;
+            int high = array.length;
+
+            //divide
+            int[] first = Arrays.copyOfRange(array, 0, fmid);
+            int[] second = Arrays.copyOfRange(array, fmid, smid);
+            int[] third = Arrays.copyOfRange(array, smid, high);
+            TripleMergeSort(first);
+            TripleMergeSort(second);
+            TripleMergeSort(third);
+
+            //conquer
+            TripleMerge(first,second,third,array);
+        }
+        else {
+            int[] first = Arrays.copyOfRange(array, 0, 0);
+            int[] second = Arrays.copyOfRange(array, 0, 1);
+            int[] third = Arrays.copyOfRange(array, 1, array.length);
+            TripleMerge(first, second, third, array);
+        }
+
+
+    }
+
+    public static void TripleMerge(int[] first,int[] second, int[] third, int[] array){
+        /*
+            AmirMohammad Karamzadeh - 9450021
+            Dariush Makvandi - 9450028
+            Running time : 4 seconds
+        */
+        int i=0,j=0,k=0;
+
+        while(i+j+k < array.length){
+
+            //two arrays have been used and one of them is not
+            if((k==third.length&&j == second.length && i<first.length))// ||(i<first.length && first[i]<second[j] && first[i]<third[k]))
+                array[i+j+k] = first[i++];
+            else if((k==third.length && i==first.length && j<second.length))// ||(j<second.length && second[j]<first[i] && second[j] < third[k]))
+                array[i+j+k] = second[j++];
+            else if((i==first.length && j==second.length && k<third.length))// ||(j<second.length && third[k]<first[i] && third[k] < second[j]))
+                array[i+j+k] = third[k++];
+
+            //one of arrays is used and two others are not
+            //first is used :
+            else if(i==first.length && (j<second.length && k<third.length)){
+                if(second[j] < third[k])
+                    array[i+j+k] = second[j++];
+                else
+                    array[i+j+k] = third[k++] ;
+            }
+
+            //second is used :
+            else if(j==second.length && (i<first.length && k<third.length)){
+                if(first[i] < third[k])
+                    array[i+j+k] = first[i++];
+                else
+                    array[i+j+k] = third[k++];
+            }
+
+            //third is used:
+            else if(k==third.length && (i<first.length && j<second.length)){
+                if(first[i] < second[j])
+                    array[i+j+k] = first[i++];
+                else
+                    array[i+j+k] = second[j++];
+            }
+
+            //all arrays have not completly used
+            else{
+                if(first[i]<=second[j] && first[i]<=third[k])
+                    array[i+j+k] = first[i++];
+                else if(second[j]<=first[i] && second[j]<=third[k])
+                    array[i+j+k] = second[j++];
+                else
+                    array[i+j+k] = third[k++];
+            }
+        }
+    }
+
+    public static void arrayToFile(int[] array){
+        /*
+            Amirmohammad Karamzadeh - 9450021
+            Dariush Makvandi - 9450028
+        */
+        try
+        {
+            java.io.File file = new java.io.File("TripleMegeSort.txt");
+            file.createNewFile();
+            java.io.FileWriter wr = new java.io.FileWriter(file);
+            for (int a : array)
+            {
+                wr.append(a + ",");
+            }
+            wr.flush();
+            wr.close();
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
 }
