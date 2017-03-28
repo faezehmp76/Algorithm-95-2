@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -67,6 +68,10 @@ public class Algorithm952 {
                     TripleMergeSort(array);
                     arrayToFile(array);
                     System.out.println("Sorting done and the sorted file is \"TripleMergeSort.txt\" in the project directory!");
+                    break;
+                case 5:
+                    System.out.println("Using Insertion Sort Method For Sorting");
+                    InsertionSort("File.txt");
                     break;
             }
         }
@@ -331,6 +336,82 @@ public class Algorithm952 {
             }
         }
     }
+    
+    public static void InsertionSort(String file){
+        /*
+            Ghazal Arefzadeh : 9450018
+            Nikoo Moradi : 9450024
+            Maryam Mousawi : 9450029
+            Running time : Over 24 hours !
+        */
+        // متدی برای مرتب سازی اعداد موجود در فایلی که آدرس آن در رشته file  است
+
+   	//آرایه ای برای نگهداری عناصر موجود در فایل 
+        ArrayList<Integer> array = new ArrayList<Integer>();         
+        
+	// در خواندن هر خط از فایل مقادیر آن در این رشته قرار میگیرد
+        String line = null;
+
+	//خواندن از فایل
+        try {
+            
+            FileReader fileReader = new FileReader(file);
+
+            
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+	    
+            while((line = bufferedReader.readLine()) != null) {
+		
+		// جدا سازی اعداد موجود در رشته ای که هر خط از فایل را میخواند 
+                String[] a;
+                a= line.split(",");
+		//قرار دادن اعداد در آرایه
+                for(int i=0 ; i<a.length  ; i++){
+                   
+                    array.add(Integer.parseInt(a[i]));
+                }
+              
+            }   
+           
+            // بستن فایل
+            bufferedReader.close();         
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                file + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error reading file '" 
+                + file + "'");               
+           
+        }
+        
+        
+        // نگهداری زمان شروع مرتب سازی
+        long t1 = System.currentTimeMillis();
+        
+       // شروع مرتب سازی 
+     	 int temp = 0;
+            for(int i=0 ; i<array.size() ; i++)
+            {
+                for(int j=i ; j<array.size() ; j++)
+                {
+                    if(array.get(i)>array.get(j))
+                    {
+                        temp = array.get(i);
+                        array.set(i, array.get(j));
+                        array.set(j, temp);
+                    }
+                }
+            }
+	// زمان پایان مرتب سازی
+        long t2 = System.currentTimeMillis();
+   	// محاسبه اختلاف زمان شروع و پایان برای به دست آورد مدت زمانی که مرتب سازی به طول می انجامد
+        System.out.println("Time in milliseconds: " + (t2 - t1));
+  
+}
 
     public static void arrayToFile(int[] array){
         /*
