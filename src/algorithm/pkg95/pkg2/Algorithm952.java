@@ -20,11 +20,13 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -43,7 +45,7 @@ public class Algorithm952 {
         Scanner input = new Scanner(System.in);
         // **********************************
         System.out.println("************      Menu      ************** \n Plz Enter One of the Menu Numbers");
-        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. Triple Merge Sort \n5. etc");
+        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. Triple Merge Sort \n5. Simple Sort\n6. etc");
         while(true)
         {
             int n = input.nextInt();
@@ -67,6 +69,10 @@ public class Algorithm952 {
                     TripleMergeSort(array);
                     arrayToFile(array);
                     System.out.println("Sorting done and the sorted file is \"TripleMergeSort.txt\" in the project directory!");
+                    break;
+                case 5:
+                    System.out.println("Using Simple Sort Method For Sorting");
+                    SimpleSort("File.txt");
                     break;
             }
         }
@@ -331,6 +337,40 @@ public class Algorithm952 {
             }
         }
     }
+    
+    public static void SimpleSort(String file){
+        /*
+            Ghazal Arefzadeh : 9450018
+            Nikoo Moradi : 9450024
+            Maryam Mousawi : 9450029
+            Running time : Over 24 hours !
+        */
+        
+        int[] array = getArray();
+        
+        // نگهداری زمان شروع مرتب سازی
+        long t1 = System.currentTimeMillis();
+        
+       // شروع مرتب سازی 
+     	 int temp = 0;
+            for(int i=0 ; i<array.length ; i++)
+            {
+                for(int j=i ; j<array.length ; j++)
+                {
+                    if(array[i] >array[j])
+                    {
+                        temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                    }
+                }
+            }
+	// زمان پایان مرتب سازی
+        long t2 = System.currentTimeMillis();
+   	// محاسبه اختلاف زمان شروع و پایان برای به دست آورد مدت زمانی که مرتب سازی به طول می انجامد
+        System.out.println("Time in milliseconds: " + (t2 - t1));
+  
+}
 
     public static void arrayToFile(int[] array){
         /*
