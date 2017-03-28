@@ -26,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -44,7 +45,7 @@ public class Algorithm952 {
         Scanner input = new Scanner(System.in);
         // **********************************
         System.out.println("************      Menu      ************** \n Plz Enter One of the Menu Numbers");
-        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. Triple Merge Sort \n5. etc");
+        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. Triple Merge Sort \n5. Simple Sort\n6. etc");
         while(true)
         {
             int n = input.nextInt();
@@ -70,8 +71,8 @@ public class Algorithm952 {
                     System.out.println("Sorting done and the sorted file is \"TripleMergeSort.txt\" in the project directory!");
                     break;
                 case 5:
-                    System.out.println("Using Insertion Sort Method For Sorting");
-                    InsertionSort("File.txt");
+                    System.out.println("Using Simple Sort Method For Sorting");
+                    SimpleSort("File.txt");
                     break;
             }
         }
@@ -337,72 +338,30 @@ public class Algorithm952 {
         }
     }
     
-    public static void InsertionSort(String file){
+    public static void SimpleSort(String file){
         /*
             Ghazal Arefzadeh : 9450018
             Nikoo Moradi : 9450024
             Maryam Mousawi : 9450029
             Running time : Over 24 hours !
         */
-        // متدی برای مرتب سازی اعداد موجود در فایلی که آدرس آن در رشته file  است
-
-   	//آرایه ای برای نگهداری عناصر موجود در فایل 
-        ArrayList<Integer> array = new ArrayList<Integer>();         
         
-	// در خواندن هر خط از فایل مقادیر آن در این رشته قرار میگیرد
-        String line = null;
-
-	//خواندن از فایل
-        try {
-            
-            FileReader fileReader = new FileReader(file);
-
-            
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-	    
-            while((line = bufferedReader.readLine()) != null) {
-		
-		// جدا سازی اعداد موجود در رشته ای که هر خط از فایل را میخواند 
-                String[] a;
-                a= line.split(",");
-		//قرار دادن اعداد در آرایه
-                for(int i=0 ; i<a.length  ; i++){
-                   
-                    array.add(Integer.parseInt(a[i]));
-                }
-              
-            }   
-           
-            // بستن فایل
-            bufferedReader.close();         
-        }
-        catch(FileNotFoundException ex) {
-            System.out.println(
-                "Unable to open file '" + 
-                file + "'");                
-        }
-        catch(IOException ex) {
-            System.out.println(
-                "Error reading file '" 
-                + file + "'");               
-           
-        }
-        
+        int[] array = getArray();
         
         // نگهداری زمان شروع مرتب سازی
         long t1 = System.currentTimeMillis();
         
        // شروع مرتب سازی 
      	 int temp = 0;
-            for(int i=0 ; i<array.size() ; i++)
+            for(int i=0 ; i<array.length ; i++)
             {
-                for(int j=i ; j<array.size() ; j++)
+                for(int j=i ; j<array.length ; j++)
                 {
-                    if(array.get(i)>array.get(j))
+                    if(array[i] >array[j])
                     {
-                        temp = array.get(i);
-                        array.set(i, array.get(j));
-                        array.set(j, temp);
+                        temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
                     }
                 }
             }
