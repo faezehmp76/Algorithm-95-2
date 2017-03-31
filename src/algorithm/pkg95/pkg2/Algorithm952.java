@@ -45,7 +45,7 @@ public class Algorithm952 {
         Scanner input = new Scanner(System.in);
         // **********************************
         System.out.println("************      Menu      ************** \n Plz Enter One of the Menu Numbers");
-        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. Triple Merge Sort \n5. Simple Sort\n6. etc");
+        System.out.println("1. Exit \n2. Generate File\n3. Merge Sort \n4. Triple Merge Sort \n5. Simple Sort\n6. Linear Search\n. etc");
         while(true)
         {
             int n = input.nextInt();
@@ -73,6 +73,15 @@ public class Algorithm952 {
                 case 5:
                     System.out.println("Using Simple Sort Method For Sorting");
                     SimpleSort("File.txt");
+                    break;
+                case 6:
+                    System.out.println("Enter Number You Want To Find:");
+                    int number = input.nextInt();
+                    int a[] = getArray();
+                    int result = LinearSearch(a,number);
+                    if(result == -1)
+                        System.out.println("This number doesn't exist in the array");
+                    System.out.println("The number is in index: "+result);
                     break;
             }
         }
@@ -392,5 +401,23 @@ public class Algorithm952 {
         {
             ex.printStackTrace();
         }
+    }
+    
+    public static int LinearSearch(int array[],int number)
+    {
+        /*
+            Faezeh Moeinpour - 9450027
+            Fereshte Davoodi - 9599927
+            Tayebe Yousefi - 9450034
+            Fateme Rahmani Zadeh - 9450009
+        */
+        int result = -1;
+        for(int i=0; i<array.length; i++)
+        {
+            if(array[i]==number)
+                result=i;
+        }
+        
+        return result;
     }
 }
